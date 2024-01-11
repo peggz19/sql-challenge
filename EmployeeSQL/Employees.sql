@@ -128,6 +128,7 @@ SELECT titles.title,
 		ON employees.emp_no = dept_emp.emp_no
 		INNER JOIN departments
 		ON departments.dept_no = dept_emp.dept_no
+		
 
 --List first name, last name, and sex of each employee whose first name is Hercules and
 --whose last name begins with the letter B
@@ -151,7 +152,21 @@ SELECT titles.title,
 		ON employees.emp_no = dept_emp.emp_no
 		INNER JOIN departments
 		ON dept_emp.dept_no=departments.dept_no
-		INNER JOIN dept_manager
-		ON dept_manager.dept_no=departments.dept_no
 		WHERE dept_name like 'Sales'
+
 		
+-- List each employee in the Sales and Development departments, including their employee number, last name, 
+--first name, and department name 
+SELECT titles.title,
+		employees.emp_no,
+		employees.first_name,
+		employees.last_name,
+		departments.dept_name
+		FROM employees 
+		INNER JOIN titles 
+		ON employees.emp_title = titles.title_id
+		INNER JOIN dept_emp 
+		ON employees.emp_no = dept_emp.emp_no
+		INNER JOIN departments 
+		ON dept_emp.dept_no=departments.dept_no
+		WHERE dept_name like 'Sales' or dept_name like 'Development'
