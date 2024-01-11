@@ -74,8 +74,40 @@ ALTER TABLE "salaries" ADD CONSTRAINT "fk_salaries_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
 
 -- PART 2. DATA ENGINEERING (Importing csv files)
--- importation order was Titles, Employees, Departments, the rest has no importance
+-- The importation order was Titles, Employees, Departments, the rest has no importance
 
 -- PART 3. DATA ANALYSIS
 
 --List the employee number, last name, first name, sex, and salary of each employee.
+SELECT employees.emp_no
+ 	,employees.last_name
+	,employees.first_name
+	,employees.sex
+	,salaries.salary
+	FROM employees
+	JOIN salaries
+	ON employees.emp_no=salaries.emp_no
+	
+--List the first name, last name, and hire date for the employees who were hired in 1986
+SELECT employees.first_name,
+		employees.last_name,
+		employees.hire_date
+		FROM employees
+		WHERE hire_date between '1986-01-01' and '1986-12-31';
+		
+--List the manager of each department along with their department number, department name, 
+--employee number, last name, and first name
+
+SELECT titles.title,
+		employees.last_name,
+		employees.first_name,
+		employees.emp_no,
+		departments.dept_name,
+		departments.dept_no
+		FROM employees
+		INNER JOIN titles
+		ON employees.emp_title = titles.title_id
+		INNER JOIN dept_manager
+		ON employees.emp_no = dept_manager.emp_no
+		INNER JOIN departments
+		ON departments.dept_no = dept_manager.dept_no
