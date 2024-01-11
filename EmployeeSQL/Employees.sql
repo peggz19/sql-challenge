@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS "SQL Challenge"."public"."employees" CASCADE;
 DROP TABLE IF EXISTS "SQL Challenge"."public"."salaries" CASCADE;
 DROP TABLE IF EXISTS "SQL Challenge"."public"."titles" CASCADE;
 
--- PART 1. DATA MODELING (done with the above link)
+-- PART 1. DATA MODELING
 SET datestyle ='ISO,YMD'; -- changing the csv date type was needed to ensure it matches the ymd style of Postgresql
 SHOW datestyle;
 
@@ -137,3 +137,21 @@ SELECT employees.first_name,
 		FROM employees
 		WHERE first_name like 'Hercules'
 		AND last_name  like 'B%'
+
+--List each employee in the Sales department, including their employee number, last name, and first name
+SELECT titles.title,
+		employees.emp_no,
+		employees.first_name,
+		employees.last_name,
+		departments.dept_name
+		FROM employees
+		INNER JOIN titles
+		ON employees.emp_title = titles.title_id
+		INNER JOIN dept_emp
+		ON employees.emp_no = dept_emp.emp_no
+		INNER JOIN departments
+		ON dept_emp.dept_no=departments.dept_no
+		INNER JOIN dept_manager
+		ON dept_manager.dept_no=departments.dept_no
+		WHERE dept_name like 'Sales'
+		
