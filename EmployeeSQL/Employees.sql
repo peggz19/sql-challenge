@@ -170,3 +170,11 @@ SELECT titles.title,
 		INNER JOIN departments 
 		ON dept_emp.dept_no=departments.dept_no
 		WHERE dept_name like 'Sales' or dept_name like 'Development'
+		
+--List the frequency counts, in descending order, 
+--of all the employee last names (that is, how many employees share each last name) (4 points)
+SELECT last_name,
+	count(*) as Value_Count
+	FROM employees 
+	GROUP BY last_name
+	ORDER BY last_name desc
